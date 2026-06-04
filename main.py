@@ -523,14 +523,15 @@ def insert_rooms():
 
         print("50 Rooms Inserted Successfully")
 
+with app.app_context():
+ db.create_all()
+ if  Room.query.count() == 0:
+  insert_rooms()
+
+
 if __name__ == '__main__':
 
-    with app.app_context():
-
-     db.create_all()
-
-     insert_rooms()
-
+    
     app.run(
         debug=os.environ.get('FLASK_DEBUG', 'False') == 'True',
         port=int(os.environ.get('FLASK_PORT', 5000))
